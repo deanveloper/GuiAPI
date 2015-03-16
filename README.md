@@ -18,7 +18,7 @@ void unregister() | Frees up ram by setting all values to `null`
 
 ----
 ## GUIItem
-`GUIItem`s are a way to store a `Consumable` (A `Runnable` with arguments) with their respective `ItemStack`. They are very easy to use.
+The `GUIItem` class is way to store a `Consumable` (A `Runnable` with arguments) with their respective `ItemStack`. They are very easy to use.
 
 ### Syntax
 Method Syntax | Description
