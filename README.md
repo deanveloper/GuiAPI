@@ -22,6 +22,7 @@ The `GUIItem` class is way to store a `Consumable` (A `Runnable` with arguments)
 
 ### Syntax
 Method Syntax | Description
+--------------|------------
 new GUIItem(ItemStack item, Consumer<InventoryClickEvent> toRun) | The ItemStack and what it will do when it is clicked
 
 The Consumer is also lambda-compatible, although don't use lambdas unless you know for a *fact* that your plugin will only be used with `Java 8`. I have provided a `Consumer` class to keep compatibility with any previous Java versions.
