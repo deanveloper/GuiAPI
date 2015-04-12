@@ -4,11 +4,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class GUIItem {
-    private Consumer<InventoryClickEvent> toRun;
+    private Consumer<InventoryClickEvent> invClick;
     private ItemStack item;
 
     public GUIItem(ItemStack item, Consumer<InventoryClickEvent> toRun) {
-        this.toRun = toRun;
+        this.invClick = toRun;
         this.item = item;
     }
 
@@ -16,7 +16,7 @@ public class GUIItem {
         return this.item;
     }
 
-    void run(InventoryClickEvent e) {
-        this.toRun.accept(e);
+    void invClick(InventoryClickEvent e) {
+        this.invClick.accept(e);
     }
 }
