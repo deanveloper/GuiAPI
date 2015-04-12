@@ -1,46 +1,51 @@
 package com.deanveloper.gui;
 
+import net.mcpz.pzcore.api.CoreUtils;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GUIWindow {
-    static Map<Inventory, GUIWindow> windows = new HashMap<>();
+    private static Map<String, GUIWindow> windows = new HashMap<>();
 
     private Inventory inv;
-    private List<GUIItem> items;
+    private Map<Integer, GUIItem> items;
 	private Consumer<InventoryOpenEvent> onOpen = null;
 	private Consumer<InventoryCloseEvent> onClose = null;
 
     private boolean registered;
 
     public GUIWindow(String name, int rows) {
+		name = getValidName(name);
+
         this.inv = Bukkit.createInventory(null, rows * 9, name);
-        this.items = new ArrayList<>(rows * 9);
-		windows.put(inv, this);
+        this.items = new HashMap<>(rows * 9);
+
+
+		windows.put(name, this);
 
         this.registered = true;
     }
 
     public void setItem(int slot, GUIItem item) {
-        if(!this.registered) throw new IllegalStateException("GUI is unregistered!");
+        CoreUtils.force(this.registered);
 
-        this.items.set(slot, item);
+        this.items.put(slot, item);
         this.inv.setItem(slot, item.getBukkitItem());
     }
 
 	public void setItem(int x, int y, GUIItem item){
-		setItem(x*9 + y, item);
+		setItem(x + y*9, item);
 	}
 
     public GUIItem getItem(int slot) {
-		if(!this.registered) throw new IllegalStateException("GUI is unregistered!");
+        CoreUtils.force(this.registered);
         return this.items.get(slot);
     }
 
@@ -49,24 +54,20 @@ public class GUIWindow {
 	}
 
 	public void setOpenEvent(Consumer<InventoryOpenEvent> e){
-		if(!this.registered) throw new IllegalStateException("GUI is unregistered!");
 		this.onOpen = e;
 	}
 
 	@Deprecated
 	void callOpen(InventoryOpenEvent e){
 		if(onOpen != null) onOpen.accept(e);
-		if(!this.registered) throw new IllegalStateException("GUI is unregistered!");
 	}
 
 	public void setCloseEvent(Consumer<InventoryCloseEvent> e){
-		if(!this.registered) throw new IllegalStateException("GUI is unregistered!");
 		this.onClose = e;
 	}
 
 	@Deprecated
 	void callClosed(InventoryCloseEvent e){
-		if(!this.registered) throw new IllegalStateException("GUI is unregistered!");
 		if(onClose != null) onClose.accept(e);
 	}
 
@@ -75,15 +76,29 @@ public class GUIWindow {
      * @deprecated only use if you know what you're doing
      */
     public Inventory getBukkitInventory() {
-		if(!this.registered) throw new IllegalStateException("GUI is unregistered!");
+        CoreUtils.force(this.registered);
         return this.inv;
     }
 
+	public void show(HumanEntity h){
+		Inventory inv = Bukkit.createInventory(h, getBukkitInventory().getSize(), getBukkitInventory().getTitle());
+		inv.setContents(getBukkitInventory().getContents());
+		h.openInventory(inv);
+	}
+
     public void unregister() {
-		if(!this.registered) throw new IllegalStateException("GUI is unregistered!");
-        windows.remove(this.inv);
+        CoreUtils.force(this.registered);
+        windows.remove(this.getBukkitInventory().getTitle());
         this.items.clear();
-		this.items = null;
         this.registered = false;
     }
+
+	static GUIWindow getWindow(String inv){
+		return windows.get(inv);
+	}
+
+	private String getValidName(String name){
+		if(windows.containsKey(name)) return getValidName(name + ChatColor.RESET);
+		else return name;
+	}
 }
