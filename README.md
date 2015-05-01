@@ -14,7 +14,7 @@ GUIItem getItem(int slot) | Gets the item in the slot `slot`
 GUIItem getItem(int x, int y) | Gets the item in the proper `x` and `y` coordinates
 void setOpenEvent(Consumer<InventoryOpenEvent> e) | Sets what to do when the inventory is opened. A `Consumer` is pretty much a `Runnable` but has an argument in the run method
 void setCloseEvent(Consumer<InventoryCloseEvent> e) | Sets what to do when the inventory is closed
-void unregister() | Frees up ram by setting all values to `null`
+void unregister() | Frees up RAM by setting all values to `null`
 
 ----
 ## GUIItem
