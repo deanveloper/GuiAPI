@@ -14,9 +14,11 @@ gui.setItem(x, y, guiItem);
 ````
 
 The parameters for the constructors are
-
+#### GUIWindow
  - ``String title`` - The title of your GUI window
  - ``int rows`` - How many rows the GUI will have
+
+#### GUIItem
  - ``ItemStack itemToShow`` - The item that a GUIItem will display as in the GUIWindow
  - ``Consumer<InventoryClickEvent> whenClicked`` - What action to perform when clicked
  - ``int x`` - The x value of the item
