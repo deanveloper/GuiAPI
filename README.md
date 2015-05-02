@@ -39,9 +39,9 @@ gui.setItem(4, 1, guiItem);
 
 #### Java 8 (Much Simpler)
 ````java
-ItemStack REDSTONE = new ItemStack(Material.REDSTONE);
+ItemStack redstone = new ItemStack(Material.REDSTONE);
 GUIWindow gui = new GUIWindow("Get some redstone!", 3);
-GUIItem guiItem = new GUIItem(REDSTONE, event -> event.getWhoClicked().getInventory().addItem(REDSTONE));
+GUIItem guiItem = new GUIItem(redstone, event -> event.getWhoClicked().getInventory().addItem(redstone));
 
 gui.setItem(4, 1, guiItem);
 ````
