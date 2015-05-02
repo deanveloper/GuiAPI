@@ -8,13 +8,13 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 
-public class GUIListener implements Listener{
+public class GUIListener implements Listener {
 	@EventHandler
-	public void onClick(InventoryClickEvent e){
+	public void onClick(InventoryClickEvent e) {
 		GUIWindow window = GUIWindow.getWindow(e.getInventory().getTitle());
-		if(window != null){
+		if(window != null) {
 			GUIItem item = window.getItem(e.getSlot());
-			if(item != null){
+			if(item != null) {
 				item.invClick(e);
 			}
 			e.setResult(Event.Result.DENY);
@@ -23,23 +23,23 @@ public class GUIListener implements Listener{
 	}
 
 	@EventHandler
-	public void onOpen(InventoryOpenEvent e){
+	public void onOpen(InventoryOpenEvent e) {
 		GUIWindow window = GUIWindow.getWindow(e.getInventory().getTitle());
-		if(window != null){
+		if(window != null) {
 			window.callOpen(e);
 		}
 	}
 
 	@EventHandler
-	public void onClose(InventoryCloseEvent e){
+	public void onClose(InventoryCloseEvent e) {
 		GUIWindow window = GUIWindow.getWindow(e.getInventory().getTitle());
-		if(window != null){
+		if(window != null) {
 			window.callClosed(e);
 		}
 	}
 
 	@EventHandler
-	public void onInteract(InventoryInteractEvent e){
+	public void onInteract(InventoryInteractEvent e) {
 		if(GUIWindow.getWindow(e.getInventory().getTitle()) != null){
 			e.setResult(Event.Result.DENY);
 			e.setCancelled(true);
