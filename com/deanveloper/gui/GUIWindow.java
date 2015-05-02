@@ -1,7 +1,7 @@
 package com.deanveloper.gui;
 
 import net.mcpz.pzcore.api.CoreUtils;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -40,7 +40,7 @@ public class GUIWindow {
         this.inv.setItem(slot, item.getBukkitItem());
     }
 
-	public void setItem(int x, int y, GUIItem item){
+	public void setItem(int x, int y, GUIItem item) {
 		setItem(x + y*9, item);
 	}
 
@@ -49,25 +49,25 @@ public class GUIWindow {
         return this.items.get(slot);
     }
 
-	public GUIItem getItem(int x, int y){
+	public GUIItem getItem(int x, int y) {
 		return getItem(x*9 + y);
 	}
 
-	public void setOpenEvent(Consumer<InventoryOpenEvent> e){
+	public void setOpenEvent(Consumer<InventoryOpenEvent> e) {
 		this.onOpen = e;
 	}
 
 	@Deprecated
-	void callOpen(InventoryOpenEvent e){
+	void callOpen(InventoryOpenEvent e) {
 		if(onOpen != null) onOpen.accept(e);
 	}
 
-	public void setCloseEvent(Consumer<InventoryCloseEvent> e){
+	public void setCloseEvent(Consumer<InventoryCloseEvent> e) {
 		this.onClose = e;
 	}
 
 	@Deprecated
-	void callClosed(InventoryCloseEvent e){
+	void callClosed(InventoryCloseEvent e) {
 		if(onClose != null) onClose.accept(e);
 	}
 
@@ -80,7 +80,7 @@ public class GUIWindow {
         return this.inv;
     }
 
-	public void show(HumanEntity h){
+	public void show(HumanEntity h) {
 		Inventory inv = Bukkit.createInventory(h, getBukkitInventory().getSize(), getBukkitInventory().getTitle());
 		inv.setContents(getBukkitInventory().getContents());
 		h.openInventory(inv);
@@ -93,11 +93,11 @@ public class GUIWindow {
         this.registered = false;
     }
 
-	static GUIWindow getWindow(String inv){
+	static GUIWindow getWindow(String inv) {
 		return windows.get(inv);
 	}
 
-	private String getValidName(String name){
+	private String getValidName(String name) {
 		if(windows.containsKey(name)) return getValidName(name + ChatColor.RESET);
 		else return name;
 	}
