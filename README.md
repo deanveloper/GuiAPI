@@ -25,12 +25,12 @@ The parameters for the constructors are
 ## Example usage
 #### Java 7
 ````java
-ItemStack REDSTONE = new ItemStack(Material.REDSTONE);
+ItemStack redstone = new ItemStack(Material.REDSTONE);
 GUIWindow gui = new GUIWindow("Get some redstone!", 3);
-GUIItem guiItem = new GUIItem(REDSTONE, new Consumer<>() {
+GUIItem guiItem = new GUIItem(redstone, new Consumer<>() {
   @Override
   public void accept (InventoryClickEvent event){
-    event.getWhoClicked().getInventory().addItem(REDSTONE));
+    event.getWhoClicked().getInventory().addItem(redstone));
   }
 }
 
