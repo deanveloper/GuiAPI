@@ -3,7 +3,7 @@ Create Bukkit GUIs super easily!
 
 ## Installing
 
-All you need to do is copy the files into your plugin. Do not copy the Consumer class in if you are 100% sure that the plugin will only be run on Java 8.
+All you need to do is copy the files into your plugin. You do not need to copy ``Consumer.java`` if you are sure that the plugin will only be run on Java 8
 
 ## Usage
 ````java
