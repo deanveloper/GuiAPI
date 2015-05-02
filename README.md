@@ -1,31 +1,54 @@
 # GuiAPI
-=================
+Create Bukkit GUIs super easily!
 
-## GUIWindow
-GUIWindow is the main class that you will be working with when using the GUIApi. It will be the base for each GUI that you make, and is the equivalent of an Inventory if you were to be creating a GUI from scratch.
+## Installing
 
-### Syntax
-Method Syntax | Description
---------------|------------
-new GUIWindow(String name, int rows) | Creates a `GUIWindow` with the title `name` and `rows` rows
-void setItem(int slot, GUIItem item) | Sets slot `slot` in the inventory to `item`
-void setItem(int x, int y, GUIItem item) | Sets slot at the proper `x` and `y` coordinates to `item`
-GUIItem getItem(int slot) | Gets the item in the slot `slot`
-GUIItem getItem(int x, int y) | Gets the item in the proper `x` and `y` coordinates
-void setOpenEvent(Consumer<InventoryOpenEvent> e) | Sets what to do when the inventory is opened. A `Consumer` is pretty much a `Runnable` but has an argument in the run method
-void setCloseEvent(Consumer<InventoryCloseEvent> e) | Sets what to do when the inventory is closed
-void unregister() | Frees up RAM by setting all values to `null`, as well as optimizing by taking the object out of the list of instances
+All you need to do is copy the files into your plugin. Do not copy the Consumer class in if you are 100% sure that the plugin will only be run on Java 8.
 
-----
-## GUIItem
-The `GUIItem` class is way to store a `Consumable` (A `Runnable` with arguments) with their respective `ItemStack`. They are very easy to use.
+## Usage
+````java
+GUIWindow gui = new GUIWindow(title, rows);
+GUIItem guiItem = new GUIItem(itemToShow, whenClicked);
 
-### Syntax
-Method Syntax | Description
---------------|------------
-new GUIItem(ItemStack item, Consumer<InventoryClickEvent> toRun) | The ItemStack and what it will do when it is clicked
+gui.setItem(x, y, guiItem);
+````
 
-The Consumer is also lambda-compatible, although don't use lambdas unless you know for a *fact* that your plugin will only be used with `Java 8`. I have provided a `Consumer` class to keep compatibility with any previous Java versions.
+The parameters for the constructors are
 
-----
-That's it! Thanks for using my resource, leave a star on the repo if you liked it!
+ - ``String title`` - The title of your GUI window
+ - ``int rows`` - How many rows the GUI will have
+ - ``ItemStack itemToShow`` - The item that a GUIItem will display as in the GUIWindow
+ - ``Consumer<InventoryClickEvent> whenClicked`` - What action to perform when clicked
+ - ``int x`` - The x value of the item
+ - ``int y`` - The y value of the item
+
+## Example usage
+#### Java 7
+````java
+ItemStack REDSTONE = new ItemStack(Material.REDSTONE);
+GUIWindow gui = new GUIWindow("Get some redstone!", 3);
+GUIItem guiItem = new GUIItem(REDSTONE, new Consumer<>() {
+  @Override
+  public void accept (InventoryClickEvent event){
+    event.getWhoClicked().getInventory().addItem(REDSTONE));
+  }
+}
+
+gui.setItem(4, 1, guiItem);
+````
+
+#### Java 8 (Much Simpler)
+````java
+ItemStack REDSTONE = new ItemStack(Material.REDSTONE);
+GUIWindow gui = new GUIWindow("Get some redstone!", 3);
+GUIItem guiItem = new GUIItem(REDSTONE, event -> event.getWhoClicked().getInventory().addItem(REDSTONE));
+
+gui.setItem(4, 1, guiItem);
+````
+
+## Tips
+
+ - There are also setOpenEvent() and setCloseEvent() methods!
+ - in ``setItem (x, y, guiItem)``, x and y can also be replaced with a single ``int`` to place it in a raw position
+ - a ``Consumer`` is basically just a ``Runnable`` that passes an argument into the ``run`` method
+ - If you only need the GUI for a short period of time, use the ``unregister()`` method when you don't need it anymore
