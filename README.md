@@ -21,8 +21,6 @@ The parameters for the constructors are
 #### GUIItem
  - ``ItemStack itemToShow`` - The item that a GUIItem will display as in the GUIWindow
  - ``Consumer<InventoryClickEvent> whenClicked`` - What action to perform when clicked
- - ``int x`` - The x value of the item
- - ``int y`` - The y value of the item
 
 ## Example usage
 #### Java 7
